@@ -1,0 +1,52 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color:#101110 ;
+
+
+}
+.columnContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100vw;
+    flex: 1;
+    gap: 20px;
+    flex-grow: 1;
+        /* share space with other columns */
+    min-width: 250px;  
+    background-color:#101110 ;
+
+}
+.arrow{
+ font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  width: 40px; /* fixed width to prevent layout shift */
+  text-align: center;
+}
+.arrow:hover{
+    background-color: rgb(174, 172, 172);
+    border-radius: 50%;
+    padding: 20px;
+    color: white;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    
+}
+@media (max-width: 768px) {
+  .columnContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow {
+    display: none; /* hide arrows on mobile */
+  }
+  .columnContainer{
+    height: 100vh;
+  }
+}
