@@ -8,7 +8,7 @@ export interface Todo {
 const todos: Todo[] = [];
 
 export async function GET(req: NextRequest) {
-    
+    console.log(req.url)
     return NextResponse.json(todos);
 }
 
