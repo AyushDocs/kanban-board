@@ -17,11 +17,10 @@ export const fetchTodos = async ({ email, start = 0 }: FetchTodosParams): Promis
         const res = await fetch(`http://localhost:3000/api/todo?${params.toString()}`, {
             cache: "no-store",
         });
-        if (!res.ok) {
+        if (!res.ok) 
             console.log('error')
-            throw new Error("Failed to fetch todos");
-        }
         const data = await res.json();
+        console.log(data)
         return z.array(z.array(TodoSchema)).parse(data.todos);
     } catch (err) {
         console.log('error fetching todododo')

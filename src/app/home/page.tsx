@@ -4,10 +4,10 @@ import styl from "./styles/page.module.css";
 import { DragDropProvider } from "@/provider/DragDropProvider";
 import AddTodo from "../components/AddTodo";
 import { fetchTodos } from "@/hooks/fetchTodos";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+// import { getServerSession } from "next-auth";
+// import { redirect } from "next/navigation";
 const Home = async () => {
-    const session = await getServerSession();
+    // const session = await getServerSession();
     // if (!session || !session?.user?.email) {
     //     redirect("/api/auth/signin");
     // }

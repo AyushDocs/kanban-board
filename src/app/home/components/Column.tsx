@@ -1,5 +1,5 @@
 "use client"
-import React, { FC } from "react";
+import React, { FC,memo } from "react";
 import styl from "../styles/Columns.module.css";
 import WorkTile from "./WorkTile";
 import { useDroppable } from "@dnd-kit/core";
@@ -17,7 +17,7 @@ const Column:FC<ColumnProps> = ({ id,todos }) => {
     };
 
     return (
-        <div ref={setNodeRef} style={style} className={styl.column}>
+        <div id={id} ref={setNodeRef} style={style} className={styl.column}>
             {todos.length==0 ? 
             <div className="placeholder">Drop tasks here</div>
             :todos.map((todo) => (
@@ -27,6 +27,6 @@ const Column:FC<ColumnProps> = ({ id,todos }) => {
     );
 };
 
-export default Column;
+export default memo(Column);
 
 

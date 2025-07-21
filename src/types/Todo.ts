@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const TodoSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   title: z.string(),
   description: z.string(),
   userEmail: z.string().email(),

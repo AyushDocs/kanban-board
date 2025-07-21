@@ -1,5 +1,5 @@
 "use client"
-import React, { CSSProperties, FC } from "react";
+import React, { CSSProperties, FC,memo, useEffect, useState } from "react";
 import styl from "../styles/WorkTile.module.css";
 import { useDraggable } from "@dnd-kit/core";
 import { Todo } from "@/types/Todo";
@@ -9,6 +9,7 @@ interface WorkTileProps {
 }
 
 const WorkTile: FC<WorkTileProps> = ({ todo }) => {
+
     const { id, title, description, priority, status, dueDate } = todo;
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id,
@@ -18,17 +19,20 @@ const WorkTile: FC<WorkTileProps> = ({ todo }) => {
         transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
     };
 
-    // Format due date
-    const formatDueDate = (dateStr: string) => {
-        const due=new Date(dateStr)
+    const [dueMessage, setDueMessage] = useState<string>("");
+
+    useEffect(() => {
+        // This runs only on the client
         const now = new Date();
+        const due = new Date(dueDate);
         const diffDays = Math.round((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-        
-        if (diffDays === 0) return "Due today";
-        if (diffDays === 1) return "Due tomorrow";
-        if (diffDays < 0) return `Overdue by ${Math.abs(diffDays)} day(s)`;
-        return `Due: ${due.toLocaleDateString()}`;
-    };
+
+        if (diffDays === 0) setDueMessage("Due today");
+        else if (diffDays === 1) setDueMessage("Due tomorrow");
+        else if (diffDays < 0) setDueMessage(`Overdue by ${Math.abs(diffDays)} day(s)`);
+        else setDueMessage(`Due: ${due.toLocaleDateString()}`);
+    }, [dueDate]);
+
 
     return (
         <div
@@ -48,9 +52,9 @@ const WorkTile: FC<WorkTileProps> = ({ todo }) => {
                     Priority: <b>{priority}</b>
                 </span>
             </div>
-            <div className={styl.dueDate}>{formatDueDate(dueDate)}</div>
+            <div className={styl.dueDate}>{dueMessage}</div>
         </div>
     );
 };
 
-export default WorkTile;
+export default memo(WorkTile);
