@@ -1,8 +1,10 @@
 "use client";
 
+import Column from "@/app/home/components/Column";
+import { Todo } from "@/types/Todo";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
-import { ReactNode } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 
 export type ColumnType = {
     columnName: string;
@@ -13,39 +15,36 @@ export type ColumnType = {
     }[];
 };
 
-export const DragDropProvider = ({
-    children,
-    columns,
-    setColumns,
-}: {
-    children: ReactNode;
-    setColumns: React.Dispatch<React.SetStateAction<ColumnType[]>>;
-    columns: ColumnType[];
+export const DragDropProvider: FC<PropsWithChildren<{ todos: Todo[][] }>> = ({
+    todos,
 }) => {
+    const [Todos, setTodos] = useState(todos);
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
         if (!over || active.id === over.id) return;
-
-        const sourceColumn = columns.find((column) =>
-            column.todo.some((todo) => todo.id === active.id)
+        
+        const sourceColumn = Todos.find((column) =>
+            column.some((todo) => todo.id === active.id)
         );
-        const endColumn = columns.find((column) => column.columnName === over.id);
-
+        // const endColumn = Todos.find((column) => column[0].dueDate === over.id);
+        console.log(active,over)
+        const endColumn=Todos[0]
         if (!sourceColumn || !endColumn) return;
 
-        if (sourceColumn.columnName !== endColumn.columnName) {
-            setColumns((prev) => {
+        if (sourceColumn[0].dueDate !== endColumn[0].dueDate) {
+            setTodos((prev) => {
+                if (!prev) return prev;
                 const newColumns = prev.map((column) => {
-                    if (column.columnName === sourceColumn.columnName) {
-                        const updatedTodos = column.todo.filter(
+                    if (column[0].dueDate !== sourceColumn[0].dueDate) {
+                        const updatedTodos = column.filter(
                             (todo) => todo.id !== active.id
                         );
                         return { ...column, todo: updatedTodos };
-                    } else if (column.columnName === endColumn.columnName) {
-                        const movedTodo = sourceColumn.todo.find(
+                    } else if (column[0].dueDate === endColumn[0].dueDate) {
+                        const movedTodo = sourceColumn.find(
                             (todo) => todo.id === active.id
                         );
-                        return { ...column, todo: [...column.todo, movedTodo!] };
+                        return { ...column, todo: [...column, movedTodo!] };
                     }
                     return column;
                 });
@@ -55,8 +54,17 @@ export const DragDropProvider = ({
     };
 
     return (
-        <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
-            {children}
+        <DndContext
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToWindowEdges]}
+        >
+            {todos.map((todos, index) => (
+                <Column
+                    todos={todos}
+                    key={index}
+                    id={todos[0].dueDate.toString()}
+                />
+            ))}
         </DndContext>
     );
 };

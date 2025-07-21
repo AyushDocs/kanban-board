@@ -1,16 +1,60 @@
-.column{
+.column {
     display: flex;
     flex-direction: column;
-    padding: 10px 20px;
-    height: 100vh;
-    gap: 20px;
-    border-radius: 20px;
+    padding: 16px;
+    min-height: 100vh;
+    gap: 12px;
+    border-radius: 16px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    width: 300px; /* Fixed width for consistency */
+    transition: background 0.2s ease;
 }
 
+.columnTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 12px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.placeholder {
+    color: #777;
+    text-align: center;
+    padding: 16px;
+    border: 2px dashed #555;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    font-size: 0.9rem;
+}
+
+/* Droppable feedback */
+.column.isOver {
+    background: #2a3a3a !important;
+    border-color: #4caf50;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
-    .column{
-        flex-direction: row;
-        width: 100vw;
+    .column {
+        flex-direction: column;
+        width: 90vw;
+        min-height: auto;
+        margin: 0 8px;
     }
-    
+
+    .columnTitle {
+        font-size: 1.1rem;
+    }
+}
+
+/* Scrollable container for columns */
+.columnsContainer {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 16px;
 }

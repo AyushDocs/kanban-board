@@ -1,18 +1,94 @@
 .container {
-    border-radius: 20px;
-    background: #fff;
-    padding: 20px 40px;
-    margin-block: 20px;
-    background-color: black;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f); /* Subtle dark gradient */
+    padding: 16px 24px;
+    margin-block: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     cursor: grab;
-    color: #999;
+    color: #e0e0e0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.container:active {
+    cursor: grabbing;
+    transform: scale(0.98);
 }
 
 .placeholder {
-    color: #ccc;
+    color: #999;
     text-align: center;
-    padding: 20px 10px;
-    border: 2px dashed #ccc;
-    border-radius: 4px;
-    background-color: #999;
+    padding: 16px;
+    border: 2px dashed #666;
+    border-radius: 8px;
+    background-color: #333;
+    font-size: 0.9rem;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.description {
+    margin: 8px 0;
+    color: #bbbbbb;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.detailsRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    margin-top: 12px;
+}
+
+.priority {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #aaaaaa;
+}
+
+.priority[data-priority="high"] b {
+    color: #ff4d4d;
+    background: #ff4d4d33;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.priority[data-priority="medium"] b {
+    color: #ffca28;
+    background: #ffca2833;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.priority[data-priority="low"] b {
+    color: #4caf50;
+    background: #4caf5033;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.dueDate {
+    color: #888888;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Completed state */
+.container[data-status="COMPLETED"] {
+    opacity: 0.85;
+    background: linear-gradient(145deg, #1a3c34, #132c27);
 }
